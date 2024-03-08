@@ -1,11 +1,18 @@
+const mongoose = require("mongoose");
+
 const { Schema, model } = require("mongoose");
 
 // TODO: Please make sure you edit the User model to whatever makes sense in this case
-const businessSchema = new Schema(
+const placeSchema = new mongoose.Schema(
   {
     name: {
       type: String,
       required: [true, "Name is required."],
+    },
+    type: {
+      type: String,
+      enum: ["Restaurant", "Bar", "Hotel", "Hostel"],
+      required: [true, "What type of business you are/have?."],
     },
     email: {
       type: String,
@@ -13,14 +20,10 @@ const businessSchema = new Schema(
       unique: true,
       lowercase: true,
       trim: true,
-    },
-    password: {
+    }, 
+    phone: {
       type: String,
-      required: [true, "Password is required."],
-    },
-    phone:{
-      type:String,
-      required:[true, "Phone Number is required."]
+      required: [true, "Phone Number is required."],
     },
     address: {
       type: String,
@@ -29,12 +32,10 @@ const businessSchema = new Schema(
     picture: {
       type: String,
     },
-    type:{
-      type:String,
-      required:[true, "Typology is required"]
-    }
-    
-
+    comments: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Comment",
+    },
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`
@@ -42,8 +43,8 @@ const businessSchema = new Schema(
   }
 );
 
-const Business = model("Business", businessSchema);
+const Place = mongoose.model("Place", placeSchema, "places");
 
-module.exports = Business;
+module.exports = Place;
 
 /* name, email, type, picture, location */

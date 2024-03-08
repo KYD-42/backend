@@ -1,9 +1,18 @@
 const { Schema, model } = require("mongoose");
+const mongoose = require("mongoose");
 
 // TODO: Please make sure you edit the User model to whatever makes sense in this case
 const userSchema = new Schema(
   {
-    name: {
+    userName: {
+      type: String,
+      required: [true, "Name is required."],
+    },
+    firstName: {
+      type: String,
+      required: [true, "Name is required."],
+    },
+    lastName: {
       type: String,
       required: [true, "Name is required."],
     },
@@ -18,26 +27,42 @@ const userSchema = new Schema(
       type: String,
       required: [true, "Password is required."],
     },
+    phone: {
+      type: Number,
+      required: [true, "Phone Number is required."],
+    },
     age: {
       type: Number,
       required: [true, "Age is required."],
+      validate: {
+        validator: function (v) {
+          return v >= 16;
+        },
+        message: "You must be 16 or older to register.",
+      },
     },
-    picture: {
+    photo: {
       type: String,
+      default:
+        "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+    },
+    bio: {
+      type: String,
+      default: "",
     },
     petType: {
       type: String,
-      required: [true, "Pet Type is required."],
+      enum: ["dog", "cat", "other"],
     },
     petAge: {
       type: Number,
-      required: [true, "Pet Age is required."],
     },
     petBreed: {
       type: String,
-      required: [true, "Pet Breed is required."],
     },
-
+    petPhoto: {
+      type: String,
+    },
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`

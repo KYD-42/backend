@@ -1,0 +1,73 @@
+[
+      {
+        "id": "1",
+        "text": "Great food and atmosphere!",
+        "user": 1,
+        "place": 1,
+        "createdAt": "2024-03-10T08:00:00.000Z"
+      },
+      {
+        "id": 2,
+        "text": "Lovely place to hang out with friends.",
+        "user": 2,
+        "place": 1,
+        "createdAt": "2024-03-09T10:30:00.000Z"
+      },
+      {
+        "id": 3,
+        "text": "Cozy atmosphere and friendly staff.",
+        "user": 3,
+        "place": 4,
+        "createdAt": "2024-03-08T15:45:00.000Z"
+      },
+      {
+        "id": 4,
+        "text": "Excellent cocktails!",
+        "user": 4,
+        "place": 4,
+        "createdAt": "2024-03-07T20:15:00.000Z"
+      },
+      {
+        "id": 5,
+        "text": "Comfortable rooms and great service.",
+        "user": 5,
+        "place": 8,
+        "createdAt": "2024-03-06T09:20:00.000Z"
+      },
+      {
+        "id": 6,
+        "text": "Beautiful location with stunning views.",
+        "user": 6,
+        "place": 8,
+        "createdAt": "2024-03-05T14:00:00.000Z"
+      },
+      {
+        "id": 7,
+        "text": "Perfect spot for a weekend getaway.",
+        "user": 7,
+        "place": 10,
+        "createdAt": "2024-03-04T18:30:00.000Z"
+      },
+      {
+        "id": 8,
+        "text": "Friendly staff and clean facilities.",
+        "user": 8,
+        "place": 10,
+        "createdAt": "2024-03-03T12:45:00.000Z"
+      },
+      {
+        "id": 9,
+        "text": "Great value for money.",
+        "user": 9,
+        "place": 12,
+        "createdAt": "2024-03-02T17:10:00.000Z"
+      },
+      {
+        "id": 10,
+        "text": "Convenient location and helpful staff.",
+        "user": 10,
+        "place": 12,
+        "createdAt": "2024-03-01T22:00:00.000Z"
+      }
+    ]
+  
