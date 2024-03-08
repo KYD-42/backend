@@ -35,6 +35,9 @@ app.use("/api", indexRoutes);
 const userRoutes = require("./routes/user.routes");
 app.use("/api", isAuthenticated, userRoutes);
 
+const businessUserRoutes = require("./routes/businessUser.routes");
+app.use("/api", isAuthenticated, businessUserRoutes);
+
 const placeRoutes = require("./routes/places.routes");
 app.use("/api", placeRoutes);
 

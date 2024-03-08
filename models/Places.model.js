@@ -1,10 +1,12 @@
-const mongoose = require("mongoose");
+const { Schema, model, mongoose } = require("mongoose");
 
-const { Schema, model } = require("mongoose");
-
-// TODO: Please make sure you edit the User model to whatever makes sense in this case
 const placeSchema = new mongoose.Schema(
   {
+    logo: {
+      type: String,
+      default:
+        "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+    },
     name: {
       type: String,
       required: [true, "Name is required."],
@@ -29,16 +31,13 @@ const placeSchema = new mongoose.Schema(
       type: String,
       required: [true, "Address is required."],
     },
-    picture: {
-      type: String,
-    },
-    comments: {
+    comments: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: "Comment",
-    },
+    }]
   },
   {
-    // this second object adds extra properties: `createdAt` and `updatedAt`
+  // this second object adds extra properties: `createdAt` and `updatedAt`
     timestamps: true,
   }
 );
@@ -46,5 +45,3 @@ const placeSchema = new mongoose.Schema(
 const Place = mongoose.model("Place", placeSchema, "places");
 
 module.exports = Place;
-
-/* name, email, type, picture, location */

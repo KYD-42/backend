@@ -1,5 +1,4 @@
-const { Schema, model } = require("mongoose");
-const mongoose = require("mongoose");
+const { Schema, model, mongoose } = require("mongoose");
 
 // TODO: Please make sure you edit the User model to whatever makes sense in this case
 const userSchema = new Schema(
@@ -30,6 +29,13 @@ const userSchema = new Schema(
     phone: {
       type: Number,
       required: [true, "Phone Number is required."],
+/*       validate: {
+        validator: function (v) {
+          const regex = /^(?:\+351)?(?:91|92|93|96|21)\d{7}$/;
+          return regex.test(v);
+        },
+        message: "Invalid phone number format.",
+      }, */
     },
     age: {
       type: Number,

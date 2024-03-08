@@ -1,10 +1,8 @@
-const { Schema, model } = require("mongoose");
-const mongoose = require("mongoose");
+const { Schema, model, mongoose } = require("mongoose");
 
 const commentSchema = new Schema({
   userName: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+    type: String, // Assuming userName is a string
     required: true,
   },
   text: {
@@ -12,10 +10,9 @@ const commentSchema = new Schema({
     required: true,
   },
   place: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: "Place",
-    required: true
-},
+  },
   createdAt: {
     type: Date,
     default: Date.now,
