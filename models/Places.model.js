@@ -4,17 +4,33 @@ const placeSchema = new mongoose.Schema(
   {
     logo: {
       type: String,
-      default:
-        "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+      default: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
     },
     name: {
       type: String,
       required: [true, "Name is required."],
     },
-    type: {
+    type: [{
       type: String,
       enum: ["Restaurant", "Bar", "Hotel", "Hostel"],
-      required: [true, "What type of business you are/have?."],
+      required: true,
+  }],
+    address: {
+      type: String,
+      required: [true, "Address is required."],
+    },
+    rating: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Rating",
+    },
+    priceLevel: {
+      type: String,
+      enum: ["€", "€-€€", "€€", "€€-€€€","€€€","€€€-€€€€", "€€€€"],
+      required: true,
+    },
+    phone: {
+      type: String,
+      required: [true, "Phone Number is required."],
     },
     email: {
       type: String,
@@ -22,22 +38,14 @@ const placeSchema = new mongoose.Schema(
       unique: true,
       lowercase: true,
       trim: true,
-    }, 
-    phone: {
-      type: String,
-      required: [true, "Phone Number is required."],
     },
-    address: {
-      type: String,
-      required: [true, "Address is required."],
-    },
-    comments: [{
+    comments: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Comment",
-    }]
+    }
   },
   {
-  // this second object adds extra properties: `createdAt` and `updatedAt`
+    // This object adds extra properties: `createdAt` and `updatedAt`
     timestamps: true,
   }
 );

@@ -1,20 +1,7 @@
-const { Schema, model, mongoose } = require("mongoose");
+const { Schema, model } = require("mongoose");
 
-// TODO: Please make sure you edit the User model to whatever makes sense in this case
 const userSchema = new Schema(
   {
-    userName: {
-      type: String,
-      required: [true, "Name is required."],
-    },
-    firstName: {
-      type: String,
-      required: [true, "Name is required."],
-    },
-    lastName: {
-      type: String,
-      required: [true, "Name is required."],
-    },
     email: {
       type: String,
       required: [true, "Email is required."],
@@ -26,16 +13,21 @@ const userSchema = new Schema(
       type: String,
       required: [true, "Password is required."],
     },
+    userName: {
+      type: String,
+      required: [true, "User Name is required."],
+    },
+    firstName: {
+      type: String,
+      required: [true, "First Name is required."],
+    },
+    lastName: {
+      type: String,
+      required: [true, "Last Name is required."],
+    },
     phone: {
-      type: Number,
+      type: String,
       required: [true, "Phone Number is required."],
-/*       validate: {
-        validator: function (v) {
-          const regex = /^(?:\+351)?(?:91|92|93|96|21)\d{7}$/;
-          return regex.test(v);
-        },
-        message: "Invalid phone number format.",
-      }, */
     },
     age: {
       type: Number,
@@ -54,11 +46,19 @@ const userSchema = new Schema(
     },
     bio: {
       type: String,
+    },
+    petPhoto: {
+      type: String,
+      default:
+        "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+    },
+    petName: {
+      type: String,
       default: "",
     },
     petType: {
       type: String,
-      enum: ["dog", "cat", "other"],
+      enum: ["Dog", "Cat", "Other"],
     },
     petAge: {
       type: Number,
@@ -66,12 +66,8 @@ const userSchema = new Schema(
     petBreed: {
       type: String,
     },
-    petPhoto: {
-      type: String,
-    },
   },
   {
-    // this second object adds extra properties: `createdAt` and `updatedAt`
     timestamps: true,
   }
 );
@@ -79,6 +75,3 @@ const userSchema = new Schema(
 const User = model("User", userSchema);
 
 module.exports = User;
-
-/* name, email, Age, picture, Pet Type, Pet Age, Pet Breed */
-/* Object to URL method */

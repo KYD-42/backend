@@ -29,8 +29,28 @@ router.get("/places/:id", async (req, res, next) => {
 
 router.post("/places", async (req, res, next) => {
   try {
-    const { logo, name, type, email, phone, address } = req.body;
-    const newPlace = new Place({ logo, name, type, email, phone, address });
+    const {
+      logo,
+      name,
+      type,
+      address,
+      rating,
+      priceLevel,
+      phone,
+      email,
+      comments,
+    } = req.body;
+    const newPlace = new Place({
+      logo,
+      name,
+      type,
+      address,
+      rating,
+      priceLevel,
+      phone,
+      email,
+      comments,
+    });
     await newPlace.save();
     res.status(200).json(newPlace);
   } catch (error) {
@@ -40,7 +60,11 @@ router.post("/places", async (req, res, next) => {
 
 router.put("/places/:id", async (req, res, next) => {
   try {
-    const updatedPlace = await Place.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const updatedPlace = await Place.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
     res.status(200).json(updatedPlace);
   } catch (error) {
     next(error);

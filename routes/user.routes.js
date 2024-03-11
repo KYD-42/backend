@@ -36,36 +36,38 @@ router.get("/users/:id", isAuthenticated, (req, res, next) => {
 
 router.post("/users", async (req, res, next) => {
   const {
+    email,
+    password,
     userName,
     firstName,
     lastName,
-    email,
-    password,
     phone,
     age,
     photo,
     bio,
+    petPhoto,
+    petName,
     petType,
     petAge,
     petBreed,
-    petPhoto,
   } = req.body;
 
   try {
     const newUser = await User.create({
+      email,
+      password,
       userName,
       firstName,
       lastName,
-      email,
-      password,
       phone,
       age,
       photo,
       bio,
+      petPhoto,
+      petName,
       petType,
       petAge,
       petBreed,
-      petPhoto,
     });
     res.status(200).json(newUser);
   } catch (error) {
