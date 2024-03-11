@@ -2,6 +2,9 @@ const User = require("../models/User.model");
 const router = require("express").Router();
 const { isAuthenticated } = require("../middleware/jwt.middleware");
 
+router.use(isAuthenticated);
+
+// Get All Users
 router.get("/users", async (req, res, next) => {
   try {
     const usersAll = await User.find();
@@ -11,11 +14,11 @@ router.get("/users", async (req, res, next) => {
   }
 });
 
-// GET /api/users/:id - Retrieves a specific user by id
-router.get("/users/:id", isAuthenticated, (req, res, next) => {
+// Get Users by ID
+router.get('/users/:id', isAuthenticated, (req, res, next) => {
   // Get the user id from the request parameters
   const userId = req.params.id;
-
+  
   // Find the user by id in the database
   User.findById(userId)
     .then((foundUser) => {
@@ -34,7 +37,7 @@ router.get("/users/:id", isAuthenticated, (req, res, next) => {
     });
 });
 
-router.post("/users", async (req, res, next) => {
+/* router.post("/users", async (req, res, next) => {
   const {
     email,
     password,
@@ -73,7 +76,7 @@ router.post("/users", async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-});
+}); */
 
 router.put("/users/:id", async (req, res, next) => {
   User.findByIdAndUpdate(req.params.id, req.body, { new: true })

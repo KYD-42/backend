@@ -136,10 +136,18 @@ router.post("/login", (req, res, next) => {
         res.status(401).json({ message: "User not found." });
         return;
       }
+      /*  */
+
+      // Log the found user and password provided by the user
+      console.log("Found User:", foundUser);
+      console.log("Password provided:", password);
+      /*  */
 
       const passwordCorrect = bcrypt.compareSync(password, foundUser.password);
+      console.log(passwordCorrect);
 
       if (passwordCorrect) {
+        console.log(foundUser);
         const { _id, email, userName } = foundUser;
         const payload = { _id, email, userName };
 
