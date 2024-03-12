@@ -148,12 +148,12 @@ router.post("/login", (req, res, next) => {
 
       if (passwordCorrect) {
         console.log(foundUser);
-        const { _id, email, userName } = foundUser;
-        const payload = { _id, email, userName };
+        const { _id, email, userName, firstName, lastName, petType } = foundUser;
+        const payload = { _id, email, userName, firstName, lastName, petType };
 
         const authToken = jwt.sign(payload, process.env.TOKEN_SECRET, {
           algorithm: "HS256",
-          expiresIn: "6h",
+          expiresIn: "144h",
         });
 
         res.status(200).json({ authToken: authToken });
