@@ -148,8 +148,8 @@ router.post("/login", (req, res, next) => {
 
       if (passwordCorrect) {
         console.log(foundUser);
-        const { _id, email, userName, firstName, lastName, petType } = foundUser;
-        const payload = { _id, email, userName, firstName, lastName, petType };
+        const { _id, email, userName, firstName, lastName, phone, age, photo, bio, petPhoto, petName, petType, petAge, petBreed } = foundUser;
+        const payload = { _id, email, userName, firstName, lastName, phone, age, photo, bio, petPhoto, petName, petType, petAge, petBreed};
 
         const authToken = jwt.sign(payload, process.env.TOKEN_SECRET, {
           algorithm: "HS256",
