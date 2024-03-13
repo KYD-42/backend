@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const Place = require("../models/Places.model");
 const populate = require("mongoose");
+const {isAuthenticated} = require("../middleware/jwt.middleware");
+const BusinessUser = require("../models/Business.model")
 
 router.get("/places", async (req, res, next) => {
   try {
@@ -27,9 +29,15 @@ router.get("/places/:id", async (req, res, next) => {
   }
 });
 
-router.post("/places", async (req, res, next) => {
+// ADICIONEI O QUE ESTÁ COMENTADO AGORA ABAIXO PARA TESTARMOS. ISTO SÃO AS PERMISSÕES PARA VERIFICAR O USER DURANTE A CRIAÇAO DO PLACE
+
+router.post("/places",/*  isAuthenticated, */ async (req, res, next) => {
   try {
-    const {
+    const /* businessUser= await BusinessUser.findById(req.payload._id);
+    if(!businessUser){
+      return res.status(403).json({message:"Only business users can create places."})
+    } 
+    const  */{
       logo,
       name,
       type,
