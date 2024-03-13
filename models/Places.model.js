@@ -38,7 +38,8 @@ const placeSchema = new mongoose.Schema(
       lowercase: true,
       trim: true,
     },
-    comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }]    
+    comments: [{ type: String }]
+   /*  comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }] */   
   },
   {
     // This object adds extra properties: `createdAt` and `updatedAt`

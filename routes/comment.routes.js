@@ -36,8 +36,9 @@ router.post("/places/:id/comments", async (req, res, next) => {
 
 
         await place.save();
-
-        res.status(201).json(newComment);
+        res.status(200).json(newComment);
+       
+           
     } catch (error) {
         next(error);
     }
