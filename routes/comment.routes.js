@@ -10,12 +10,12 @@ router.get("/places/:id/comments", async (req, res, next) => {
         const { id } = req.params;
 
         // Find the place by ID and populate the 'comments' field
-        const place = await Place.findById(id).populate("comments");
-        if (!place) {
+        const commentsInPlace = await Comment.find({place: id}).populate("place");
+        if (!commentsInPlace) {
             return res.status(404).json({ message: "Place not found" });
         }
 
-        res.status(200).json(place.comments);
+        res.status(200).json(commentsInPlace);
     } catch (error) {
         next(error);
     }
@@ -23,24 +23,24 @@ router.get("/places/:id/comments", async (req, res, next) => {
 
 // Create a new comment for a specific place
 router.post("/places/:id/comments", async (req, res, next) => {
-  try {
-      const { id } = req.params;
-      const { userName, text } = req.body;
+    try {
+        const { id } = req.params;
+        const { userName, text } = req.body;
 
-      const place = await Place.findById(id);
-      if (!place) {
-          return res.status(404).json({ message: "Place not found" });
-      }
+        const place = await Place.findById(id);
+        if (!place) {
+            return res.status(404).json({ message: "Place not found" });
+        }
 
-      const newComment = await Comment.create({ userName, text, place: id });
+        const newComment = await Comment.create({ userName, text, place: id });
 
-      place.comments.push(newComment._id);
-      await place.save();
 
-      res.status(201).json(newComment);
-  } catch (error) {
-      next(error);
-  }
+        await place.save();
+
+        res.status(201).json(newComment);
+    } catch (error) {
+        next(error);
+    }
 });
 
 // Update comment by comment ID
@@ -66,36 +66,51 @@ router.put("/comments/:id", async (req, res, next) => {
 });
 
 // Update comment by place ID
-router.put("/places/:id/comments", async (req, res, next) => {
-  try {
-      const { id } = req.params;
-      const { userName, text } = req.body;
+router.put("/places/:placeId/comments/:commentId", async (req, res, next) => {
+    try {
+        const { placeId, commentId } = req.params;
+        const { text } = req.body;
 
-      const place = await Place.findById(id);
-      if (!place) {
-          return res.status(404).json({ message: "Place not found" });
-      }
+        const place = await Place.findById(placeId);
+        if (!place) {
+            return res.status(404).json({ message: "Place not found" });
+        }
 
-      const newComment = await Comment.create({ userName, text, place: id });
+        const comment = await Comment.findById(commentId);
+        if (!comment) {
+            return res.status(404).json({ message: "Comment not found" });
+        }
 
-      place.comments.push(newComment._id);
-      await place.save();
+        comment.text = text;
+        await comment.save();
 
-      res.status(201).json(newComment);
-  } catch (error) {
-      next(error);
-  }
+        res.status(200).json(comment);
+    } catch (error) {
+        next(error);
+    }
 });
 
-// Delete comment by comment ID
-router.delete("/comments/:id", async (req, res, next) => {
+// Delete comment for a specific place
+router.delete("/places/:placeId/comments/:commentId", async (req, res, next) => {
     try {
-        const { id } = req.params;
+        const { placeId, commentId } = req.params;
 
-        const deletedComment = await Comment.findByIdAndDelete(id);
-
+        // Find the comment and delete it
+        const deletedComment = await Comment.findByIdAndDelete(commentId);
         if (!deletedComment) {
             return res.status(404).json({ message: "Comment not found" });
+        }
+
+        // Find the place and update its comments array
+        const place = await Place.findById(placeId);
+        if (!place) {
+            return res.status(404).json({ message: "Place not found" });
+        }
+
+        const commentIndex = place.comments.indexOf(commentId);
+        if (commentIndex !== -1) {
+            place.comments.splice(commentIndex, 1);
+            await place.save();
         }
 
         res.status(200).json({ message: "Comment deleted successfully" });
@@ -104,21 +119,5 @@ router.delete("/comments/:id", async (req, res, next) => {
     }
 });
 
-// Delete comment by place ID
-router.delete("/places/:id/comments", async (req, res, next) => {
-    try {
-        const { id } = req.params;
-
-        const deletedComment = await Comment.findByIdAndDelete(id);
-
-        if (!deletedComment) {
-            return res.status(404).json({ message: "Comment not found" });
-        }
-
-        res.status(200).json({ message: "Comment deleted successfully" });
-    } catch (error) {
-        next(error);
-    }
-});
 
 module.exports = router;

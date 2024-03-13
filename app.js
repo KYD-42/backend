@@ -33,13 +33,13 @@ const indexRoutes = require("./routes/index.routes");
 app.use("/api", indexRoutes);
 
 const userRoutes = require("./routes/user.routes");
-app.use("/api", isAuthenticated, userRoutes);
+app.use("/api", userRoutes);
 
 const businessUserRoutes = require("./routes/businessUser.routes");
-app.use("/api", isAuthenticated, businessUserRoutes);
+app.use("/api" , businessUserRoutes);
 
 const placeRoutes = require("./routes/places.routes");
-app.use("/api", isAuthenticated, placeRoutes);
+app.use("/api", placeRoutes);
 
 const commentRoutes = require("./routes/comment.routes");
 app.use("/api", commentRoutes);

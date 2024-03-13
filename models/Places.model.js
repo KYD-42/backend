@@ -20,13 +20,12 @@ const placeSchema = new mongoose.Schema(
       required: [true, "Address is required."],
     },
     rating: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Rating",
+      type: Number
     },
     priceLevel: {
       type: String,
-      enum: ["€", "€-€€", "€€", "€€-€€€","€€€","€€€-€€€€", "€€€€"],
-      required: true,
+/*       enum: ["€", "€-€€", "€€", "€€-€€€","€€€","€€€-€€€€", "€€€€"],-
+ */      required: true,
     },
     phone: {
       type: String,
@@ -39,10 +38,7 @@ const placeSchema = new mongoose.Schema(
       lowercase: true,
       trim: true,
     },
-    comments: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Comment",
-    }
+    comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }]    
   },
   {
     // This object adds extra properties: `createdAt` and `updatedAt`

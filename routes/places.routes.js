@@ -7,7 +7,7 @@ const BusinessUser = require("../models/Business.model")
 
 router.get("/places", async (req, res, next) => {
   try {
-    const places = await Place.find().populate("comments");
+    const places = await Place.find();
     res.status(200).json(places);
   } catch (error) {
     next(error);
@@ -17,7 +17,7 @@ router.get("/places", async (req, res, next) => {
 router.get("/places/:id", async (req, res, next) => {
   try {
     const { id } = req.params;
-    const place = await Place.findById(id).populate("comments");
+    const place = await Place.findById(id);
 
     if (!place) {
       return res.status(404).json({ message: "Place not found" });
@@ -42,7 +42,7 @@ router.post("/places", async (req, res, next) => {
       priceLevel,
       phone,
       email,
-      comments,
+
     } = req.body;
 
     const newPlace = await Place.create({
@@ -54,7 +54,7 @@ router.post("/places", async (req, res, next) => {
       priceLevel,
       phone,
       email,
-      comments,
+
     });
     res.status(200).json(newPlace);
   } catch (error) {
