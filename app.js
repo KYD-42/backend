@@ -39,7 +39,7 @@ const businessUserRoutes = require("./routes/businessUser.routes");
 app.use("/api", isAuthenticated, businessUserRoutes);
 
 const placeRoutes = require("./routes/places.routes");
-app.use("/api", placeRoutes);
+app.use("/api", isAuthenticated, placeRoutes);
 
 const commentRoutes = require("./routes/comment.routes");
 app.use("/api", commentRoutes);

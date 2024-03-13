@@ -31,13 +31,9 @@ router.get("/places/:id", async (req, res, next) => {
 
 // ADICIONEI O QUE ESTÁ COMENTADO AGORA ABAIXO PARA TESTARMOS. ISTO SÃO AS PERMISSÕES PARA VERIFICAR O USER DURANTE A CRIAÇAO DO PLACE
 
-router.post("/places",/*  isAuthenticated, */ async (req, res, next) => {
-  try {
-    const /* businessUser= await BusinessUser.findById(req.payload._id);
-    if(!businessUser){
-      return res.status(403).json({message:"Only business users can create places."})
-    } 
-    const  */{
+router.post("/places", async (req, res, next) => {
+  try { 
+    const {
       logo,
       name,
       type,
@@ -48,7 +44,8 @@ router.post("/places",/*  isAuthenticated, */ async (req, res, next) => {
       email,
       comments,
     } = req.body;
-    const newPlace = new Place({
+
+    const newPlace = await Place.create({
       logo,
       name,
       type,
@@ -59,11 +56,10 @@ router.post("/places",/*  isAuthenticated, */ async (req, res, next) => {
       email,
       comments,
     });
-    await newPlace.save();
     res.status(200).json(newPlace);
   } catch (error) {
-    next(error);
-  }
+    console.log(error);
+    }
 });
 
 router.put("/places/:id", async (req, res, next) => {
