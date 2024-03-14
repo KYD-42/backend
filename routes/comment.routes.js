@@ -45,13 +45,18 @@ router.post("/places/:id/comments", async (req, res, next) => {
 });
 
 // Update comment by comment ID
-router.put("/comments/:id", async (req, res, next) => {
+router.put("/places/:placeId/comments/:commentId", async (req, res, next) => {
     try {
-        const { id } = req.params;
+        const { placeId, commentId } = req.params;
         const { text } = req.body;
 
+        const place = await Place.findById(placeId);
+        if (!place) {
+            return res.status(404).json({ message: "Place not found" });
+        }
+
         const updatedComment = await Comment.findByIdAndUpdate(
-            id,
+            commentId,
             { text },
             { new: true }
         );
@@ -66,30 +71,6 @@ router.put("/comments/:id", async (req, res, next) => {
     }
 });
 
-// Update comment by place ID
-router.put("/places/:placeId/comments/:commentId", async (req, res, next) => {
-    try {
-        const { placeId, commentId } = req.params;
-        const { text } = req.body;
-
-        const place = await Place.findById(placeId);
-        if (!place) {
-            return res.status(404).json({ message: "Place not found" });
-        }
-
-        const comment = await Comment.findById(commentId);
-        if (!comment) {
-            return res.status(404).json({ message: "Comment not found" });
-        }
-
-        comment.text = text;
-        await comment.save();
-
-        res.status(200).json(comment);
-    } catch (error) {
-        next(error);
-    }
-});
 
 // Delete comment for a specific place
 router.delete("/places/:placeId/comments/:commentId", async (req, res, next) => {
