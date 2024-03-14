@@ -14,7 +14,7 @@ const { isAuthenticated } = require("./middleware/jwt.middleware");
 const app = express();
 
 // Use cors middleware
-app.use(cors({origin: ['http://localhost:5173', 'http://example.com']}));
+app.use(cors({origin: ["https://frontend-orpin-three-32.vercel.app"]}));
 
 // Use morgan middleware for logging
 app.use(morgan('dev'));
