@@ -1,6 +1,8 @@
 const User = require("../models/User.model");
 const router = require("express").Router();
 const { isAuthenticated } = require("../middleware/jwt.middleware");
+const fileUploader = require('../config/cloudinary.config');
+
 
 // Get All Users
 router.get("/users", async (req, res, next) => {
@@ -11,6 +13,15 @@ router.get("/users", async (req, res, next) => {
     next(error);
   }
 });
+
+//Route to upload images using cloudinary
+router.post('/upload', fileUploader.single('imageUrl'), async (req, res, next) => {
+  if(!req.file){
+   next(new Error('No file upload'));
+   return;
+  }
+  res.json({fileUrl : req.file.path})
+})
 
 // Get Users by ID
 router.get('/users/:id', isAuthenticated, (req, res, next) => {
@@ -34,6 +45,8 @@ router.get('/users/:id', isAuthenticated, (req, res, next) => {
       res.status(500).json({ message: "Internal Server Error" });
     });
 });
+
+
 
 /* router.post("/users", async (req, res, next) => {
   const {
